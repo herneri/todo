@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class TodoFile {
+	// FIXME: TODO_DIR is temporary, use TODO_PATH and fix issue with using home dir
 	private static final String TODO_DIR = "todo";
 	private static final String TODO_PATH = "~/" + TODO_DIR;
 
@@ -66,6 +67,7 @@ public class TodoFile {
 						f.close();
 						return;
 					}
+					// FIXME: Can't go back on later entries (Out of bounds)
 					/*else if (Week.dayData[i].equals(">B")) {
 						if (i > 0) {
 							i -= 2;
@@ -102,6 +104,7 @@ public class TodoFile {
 		return;
 	}
 
+	// TODO: Finish
 	public static void edit(String file) {
 		return;
 	}
