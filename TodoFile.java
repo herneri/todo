@@ -35,17 +35,31 @@ public class TodoFile {
 
 	public static void read(String file) {
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(file));
-			String s;
+			BufferedReader f = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+			Scanner input = new Scanner(System.in);
+			String option = null;
+			String s = null;
 
+			System.out.print("Day to read: ");
+			option = input.nextLine();
+
+			boolean isValid = false;
 			while ((s = f.readLine()) != null) {
-				System.out.println(s);
+				if (option.equals("*") || s.equals(option + ":")) {
+					isValid = true;
+				} else if (s.equals(";")) {
+					isValid = false;
+				}
+
+				if (isValid == true) {
+					System.out.println(s);
+				}
 			}
 		} catch (java.io.FileNotFoundException e) {
 			fileNotFoundPrompt(file);
 			return;
 		} catch (Exception e) {
-			System.out.println("ERROR: " + e);
+			System.out.println(e);
 		}
 
 		return;
