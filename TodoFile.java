@@ -44,11 +44,24 @@ public class TodoFile {
 			option = input.nextLine();
 
 			boolean isValid = false;
+			boolean foundSpecificValue = false;
 			while ((s = f.readLine()) != null) {
 				if (option.equals("*") || s.equals(option + ":")) {
 					isValid = true;
-				} else if (s.equals(";")) {
+					if (!option.equals("*")) {
+						foundSpecificValue = true;
+					}
+				}
+
+				if (s.equals(";")) {
 					isValid = false;
+					System.out.println();
+
+					if (foundSpecificValue == true) {
+						break;
+					}
+
+					continue;
 				}
 
 				if (isValid == true) {
@@ -59,7 +72,7 @@ public class TodoFile {
 			fileNotFoundPrompt(file);
 			return;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("ERROR: " + e);
 		}
 
 		return;
@@ -118,7 +131,6 @@ public class TodoFile {
 		return;
 	}
 
-	// TODO: Finish
 	public static void edit(String file) {
 		return;
 	}
