@@ -4,11 +4,14 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.File;
 import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class TodoFile {
 	// FIXME: TODO_DIR is temporary, use TODO_PATH and fix issue with using home dir
 	private static final String TODO_DIR = "todo";
 	private static final String TODO_PATH = "~/" + TODO_DIR;
+	private static final String EDIT_SYMBOL = "<\\EDIT\\>";
 
 	public static void checkDir() {
 		File dir = new File(TODO_DIR);
@@ -118,8 +121,60 @@ public class TodoFile {
 		return;
 	}
 
-	// TODO: Finish
 	public static void edit(String file) {
+		BufferedReader read;
+		BufferedWriter write;
+		Scanner input = new Scanner(System.in);
+		String day = null;
+		String line = null;
+		Queue<String> data = new LinkedList<String>();
+
+		try {
+			read = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+			
+			if ((line = read.readLine()) == null) {
+				System.err.println("NOTICE: File is empty, deleting file");
+				return;
+			}
+			line = null;
+			read = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+		} catch (java.io.FileNotFoundException e) {
+			fileNotFoundPrompt(file);
+			return;
+		} catch (java.io.IOException e) {
+			System.err.println("ERROR: Unable to write to file");
+			return;
+		}
+
+
+		System.out.print("Enter day to edit: ");
+		day = input.nextLine();
+		
+		if (day.equals("*")) {
+			write(file);
+			return;
+		}
+
+		try {
+			boolean isValue = false;
+			while ((line = read.readLine()) != null) {
+				if (line.equals(day + ":")) {
+					data.offer(EDIT_SYMBOL + day);
+					isValue = true;
+					continue;
+				} else if (line.equals(";") && isValue == true) {
+					isValue = false;
+					data.offer(EDIT_SYMBOL);
+					continue;
+				}
+
+				data.offer(line);
+			}
+		} catch (java.io.IOException e) {
+			System.err.println("ERROR: Can't read file");
+		}
+
+		System.out.println(data);
 		return;
 	}
 }
