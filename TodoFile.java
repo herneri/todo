@@ -99,7 +99,6 @@ class TodoFile extends Todo {
 
 	public static void edit(String file) {
 		BufferedReader read;
-		BufferedWriter write;
 		Scanner input = new Scanner(System.in);
 		Queue<String> data = new LinkedList<String>();
 		String day = null;
@@ -109,6 +108,7 @@ class TodoFile extends Todo {
 			
 			if (read.readLine() == null) {
 				System.err.println("NOTICE: File is empty, deleting file");
+				delete(file);
 				return;
 			}
 			read = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
@@ -122,6 +122,10 @@ class TodoFile extends Todo {
 
 		System.out.print("Enter day to edit: ");
 		day = input.nextLine();
+		if (isDay(day) == false) {
+			System.err.printf("ERROR: '%s' is an invalid day\n", day);
+			return;
+		}
 		
 		if (day.equals("*")) {
 			write(file);
@@ -129,6 +133,7 @@ class TodoFile extends Todo {
 		}
 
 		data = editParse(read, day);
+		editWrite(TODO_DIR + "/" + file, data, day);
 		return;
 	}
 }
