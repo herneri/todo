@@ -22,13 +22,11 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 class TodoFile extends Todo {
-	// FIXME: TODO_DIR is temporary, use TODO_PATH and fix issue with using home dir
-	public static final String TODO_DIR = "todo";
-	public static final String TODO_PATH = "~/" + TODO_DIR;
+	public static final String TODO_PATH = System.getenv("HOME") + ".todo";
 
 	public static void read(String file) {
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+			BufferedReader f = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
 			Scanner input = new Scanner(System.in);
 			String option = null;
 			String s = null;
@@ -73,10 +71,10 @@ class TodoFile extends Todo {
 
 	public static void write(String file) {
 		try {
-			BufferedWriter f = new BufferedWriter(new FileWriter(TODO_DIR + "/" + file));
+			BufferedWriter f = new BufferedWriter(new FileWriter(TODO_PATH + "/" + file));
 			Scanner input = new Scanner(System.in);
 
-			System.out.println(TODO_DIR + "/" + file);
+			System.out.println(TODO_PATH + "/" + file);
 			for (int i = 0; i < DAY_NUM; i++) {
 				System.out.println("\n" + days[i] + ": ");
 				while (true) {
@@ -114,7 +112,7 @@ class TodoFile extends Todo {
 	}
 
 	public static void delete(String file) {
-		File f = new File(TODO_DIR + "/" + file);
+		File f = new File(TODO_PATH + "/" + file);
 		
 		if (!f.delete()) {
 			System.out.println("ERROR: Failed to delete file " + f);
@@ -131,14 +129,14 @@ class TodoFile extends Todo {
 		String day = null;
 
 		try {
-			read = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+			read = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
 			
 			if (read.readLine() == null) {
 				System.err.println("NOTICE: File is empty, deleting file");
 				delete(file);
 				return;
 			}
-			read = new BufferedReader(new FileReader(TODO_DIR + "/" + file));
+			read = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
 		} catch (java.io.FileNotFoundException e) {
 			fileNotFoundPrompt(file);
 			return;
@@ -160,7 +158,7 @@ class TodoFile extends Todo {
 		}
 
 		data = editParse(read, day);
-		editWrite(TODO_DIR + "/" + file, data, day);
+		editWrite(TODO_PATH + "/" + file, data, day);
 		return;
 	}
 }

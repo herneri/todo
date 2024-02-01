@@ -28,7 +28,7 @@ class Todo {
 	public static String[] dayData = new String[DAY_NUM];
 
 	public static void checkDir() {
-		File dir = new File(TodoFile.TODO_DIR);
+		File dir = new File(TodoFile.TODO_PATH);
 		if (!dir.exists()) {
 			System.out.println("NOTICE: Todo directory not found, creating new one");
 			dir.mkdir();
