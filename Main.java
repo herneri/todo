@@ -17,8 +17,11 @@ public class Main {
 	private static String file;
 
 	public static void main(String[] args) {
-		if (args.length < 2) {
-			System.err.println("ERROR: Provide option and file");
+		if (args.length == 1 && args[0].equals("h")) {
+			System.out.println("todo: usage: todo [option] [entry name]\n\nn - Create new entry\nr - Read entry\nd - Delete entry\ne - Edit entry\nh - Print options");
+			return;
+		} else if (args.length < 2) {
+			System.err.println("ERROR: Provide option and entry name");
 			return;
 		}
 
