@@ -37,14 +37,14 @@ class Todo {
 		return;
 	}
 
-	public static void fileNotFoundPrompt(String file) {
-		System.out.println("ERROR: File \"" + file + "\" can't be found");
+	public static void fileNotFoundPrompt() {
+		System.out.println("ERROR: File \"" + TodoFile.name + "\" can't be found");
 		System.out.println("Would you like to create this file? [y/N]");
 
 		Scanner errorInput = new Scanner(System.in);
 		String choice = errorInput.nextLine();
 		if (choice.equals("y")) {
-			TodoFile.write(file);
+			TodoFile.write();
 		}
 
 		return;
@@ -88,7 +88,7 @@ class Todo {
 		return data;
 	}
 
-	public static void editWrite(String file, Queue<String> data, String day) {
+	public static void editWrite(Queue<String> data, String day) {
 		LinkedList<String> content = new LinkedList<String>();
 		Scanner input = new Scanner(System.in);
 		BufferedWriter write = null;
@@ -111,7 +111,7 @@ class Todo {
 		}
 
 		try {
-			write = new BufferedWriter(new FileWriter(file));
+			write = new BufferedWriter(new FileWriter(TodoFile.TODO_PATH + "/" + TodoFile.name));
 
 			while (data.peek() != null) {
 				if (data.peek() == EDIT_SYMBOL && isEdit == false) {

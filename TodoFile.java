@@ -23,10 +23,11 @@ import java.util.LinkedList;
 
 class TodoFile extends Todo {
 	public static final String TODO_PATH = System.getenv("HOME") + ".todo";
+	public static String name;
 
-	public static void read(String file) {
+	public static void read() {
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
+			BufferedReader f = new BufferedReader(new FileReader(TODO_PATH + "/" + TodoFile.name));
 			Scanner input = new Scanner(System.in);
 			String option = null;
 			String s = null;
@@ -60,7 +61,7 @@ class TodoFile extends Todo {
 				}
 			}
 		} catch (java.io.FileNotFoundException e) {
-			fileNotFoundPrompt(file);
+			fileNotFoundPrompt();
 			return;
 		} catch (Exception e) {
 			System.out.println("ERROR: " + e);
@@ -69,7 +70,7 @@ class TodoFile extends Todo {
 		return;
 	}
 
-	public static void list(String file) {
+	public static void list() {
 		File directory = new File(TODO_PATH);
 		String[] entries = directory.list();
 		int count = 0;
@@ -89,12 +90,12 @@ class TodoFile extends Todo {
 		return;
 	}
 
-	public static void write(String file) {
+	public static void write() {
 		try {
-			BufferedWriter f = new BufferedWriter(new FileWriter(TODO_PATH + "/" + file));
+			BufferedWriter f = new BufferedWriter(new FileWriter(TODO_PATH + "/" + TodoFile.name));
 			Scanner input = new Scanner(System.in);
 
-			System.out.println(TODO_PATH + "/" + file);
+			System.out.println(TODO_PATH + "/" + TodoFile.name);
 			for (int i = 0; i < DAY_NUM; i++) {
 				System.out.println("\n" + days[i] + ": ");
 				while (true) {
@@ -131,8 +132,8 @@ class TodoFile extends Todo {
 		return;
 	}
 
-	public static void delete(String file) {
-		File f = new File(TODO_PATH + "/" + file);
+	public static void delete() {
+		File f = new File(TODO_PATH + "/" + TodoFile.name);
 		
 		if (!f.delete()) {
 			System.out.println("ERROR: Failed to delete file " + f);
@@ -142,23 +143,23 @@ class TodoFile extends Todo {
 		return;
 	}
 
-	public static void edit(String file) {
+	public static void edit() {
 		BufferedReader read;
 		Scanner input = new Scanner(System.in);
 		Queue<String> data = new LinkedList<String>();
 		String day = null;
 
 		try {
-			read = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
+			read = new BufferedReader(new FileReader(TODO_PATH + "/" + TodoFile.name));
 			
 			if (read.readLine() == null) {
 				System.err.println("NOTICE: File is empty, deleting file");
-				delete(file);
+				delete();
 				return;
 			}
-			read = new BufferedReader(new FileReader(TODO_PATH + "/" + file));
+			read = new BufferedReader(new FileReader(TODO_PATH + "/" + TodoFile.name));
 		} catch (java.io.FileNotFoundException e) {
-			fileNotFoundPrompt(file);
+			fileNotFoundPrompt();
 			return;
 		} catch (java.io.IOException e) {
 			System.err.println("ERROR: Unable to write to file");
@@ -173,12 +174,12 @@ class TodoFile extends Todo {
 		}
 		
 		if (day.equals("*")) {
-			write(file);
+			write();
 			return;
 		}
 
 		data = editParse(read, day);
-		editWrite(TODO_PATH + "/" + file, data, day);
+		editWrite(data, day);
 		return;
 	}
 }

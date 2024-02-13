@@ -14,7 +14,6 @@
 
 public class Main {
 	private static String option;
-	private static String file;
 
 	public static void main(String[] args) {
 		if (args.length == 0 || (args.length == 1 && args[0].equals("h"))) {
@@ -33,20 +32,20 @@ public class Main {
 			return;
 		}
 
-		file = args[1];
+		TodoFile.name = args[1];
 
 		switch (option) {
 		case "r":
-			TodoFile.read(file);
+			TodoFile.read();
 			break;
 		case "n":
-			TodoFile.write(file);
+			TodoFile.write();
 			break;
 		case "d":
-			TodoFile.delete(file);
+			TodoFile.delete();
 			break;
 		case "e":
-			TodoFile.edit(file);
+			TodoFile.edit();
 			break;
 		default:
 			System.err.printf("ERROR: Invalid argument \'%s\' \n", option);
