@@ -17,18 +17,24 @@ public class Main {
 	private static String file;
 
 	public static void main(String[] args) {
-		if (args.length == 1 && args[0].equals("h")) {
+		if (args.length == 0 || (args.length == 1 && args[0].equals("h"))) {
 			System.out.println("todo: usage: todo [option] [entry name]\n\nn - Create new entry\nr - Read entry\nd - Delete entry\ne - Edit entry\nh - Print options");
+			return;
+		}
+
+		TodoFile.checkDir();
+		option = args[0];
+
+		if (args.length == 1 && option.equals("l")) {
+			TodoFile.list();
 			return;
 		} else if (args.length < 2) {
 			System.err.println("ERROR: Provide option and entry name");
 			return;
 		}
 
-		TodoFile.checkDir();
-		option = args[0];
 		file = args[1];
-		
+
 		switch (option) {
 		case "r":
 			TodoFile.read(file);
