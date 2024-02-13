@@ -12,14 +12,16 @@
     You should have received a copy of the GNU General Public License along with todo. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
+import java.util.Scanner;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+
 import java.util.Queue;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 class Todo {
 	public static final int DAY_NUM = 7;
