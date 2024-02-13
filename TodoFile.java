@@ -69,6 +69,26 @@ class TodoFile extends Todo {
 		return;
 	}
 
+	public static void list(String file) {
+		File directory = new File(TODO_PATH);
+		String[] entries = directory.list();
+		int count = 0;
+
+		for (int i = 0; i < entries.length; i++) {
+			System.out.print(entries[i] + "\t");
+			if (count == 3) {
+				System.out.println();
+				count = 0;
+				continue;
+			}
+
+			count++;
+		}
+
+		System.out.println();
+		return;
+	}
+
 	public static void write(String file) {
 		try {
 			BufferedWriter f = new BufferedWriter(new FileWriter(TODO_PATH + "/" + file));
