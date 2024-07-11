@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		if (args.length == 0 || (args.length == 1 && args[0].equals("h"))) {
-			System.out.println("todo: usage: todo [option] [entry name]\n\nn - Create new entry\nr - Read entry\nd - Delete entry\ne - Edit entry\nh - Print options");
+			System.out.println("todo: usage: todo [option] [entry name]\n\nn - Create new entry\nr - Read entry\nd - Delete entry\ne - Edit entry\nl - List entries\nh - Print options");
 			return;
 		}
 
