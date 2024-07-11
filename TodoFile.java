@@ -28,17 +28,19 @@ class TodoFile extends Todo {
 	public static String name;
 
 	public static void read() {
+		BufferedReader f = null;
+		Scanner input = new Scanner(System.in);
+		String option = null;
+		String s = null;
+		boolean isValid = false;
+		boolean foundSpecificValue = false;
+
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(TODO_PATH + "/" + TodoFile.name));
-			Scanner input = new Scanner(System.in);
-			String option = null;
-			String s = null;
+			f = new BufferedReader(new FileReader(TODO_PATH + "/" + TodoFile.name));
 
 			System.out.print("Day to read: ");
 			option = input.nextLine();
 
-			boolean isValid = false;
-			boolean foundSpecificValue = false;
 			while ((s = f.readLine()) != null) {
 				if (option.equals("*") || s.equals(option + ":")) {
 					isValid = true;
