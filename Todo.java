@@ -65,13 +65,16 @@ class Todo {
 	public static Queue<String> editParse(BufferedReader read, String day) {
 		Queue<String> data = new LinkedList<String>();
 		boolean isValue = false;
+		boolean day_exists = false;
 		String line = null;
 
 		try {
 			while ((line = read.readLine()) != null) {
 				if (line.equals(day + ":")) {
 					data.offer(EDIT_SYMBOL);
+
 					isValue = true;
+					day_exists = true;
 					continue;
 				} else if (line.equals(";") && isValue == true) {
 					isValue = false;
@@ -85,6 +88,11 @@ class Todo {
 			}
 		} catch (java.io.IOException e) {
 			System.err.println("ERROR: Can't read file");
+		}
+
+		if (day_exists == false) {
+			data.offer(EDIT_SYMBOL);
+			data.offer(EDIT_SYMBOL);
 		}
 
 		return data;
