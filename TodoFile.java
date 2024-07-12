@@ -24,7 +24,7 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 class TodoFile extends Todo {
-	public static final String TODO_PATH = System.getenv("HOME") + ".todo";
+	public static final String TODO_PATH = System.getenv("HOME") + "/.todo";
 	public static String name;
 
 	public static void read() {
